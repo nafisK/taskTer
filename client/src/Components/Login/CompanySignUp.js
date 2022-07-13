@@ -1,4 +1,5 @@
 import { React, useState } from 'react'
+const Axios = require('axios')
 
 function CompanySignUp({ setForm }) {
   //   company: type, name, email, password, dropdown of gradients, banner image, logo,
@@ -27,9 +28,14 @@ function CompanySignUp({ setForm }) {
     setData(newData)
   }
 
-  const handleFile = e => {
+  const handleFileBanner = e => {
     const newData = { ...data }
-    newData[e.target.id] = e.target.value
+    newData[e.target.id] = e.target.files[0]
+    setData(newData)
+  }
+  const handleFileLogo = e => {
+    const newData = { ...data }
+    newData[e.target.id] = e.target.files[0]
     setData(newData)
   }
 
@@ -51,7 +57,30 @@ function CompanySignUp({ setForm }) {
 
   const handleSubmit = e => {
     e.preventDefault()
-    console.log(data)
+
+    var bodyFormData = new FormData()
+    bodyFormData.append('type', data.type)
+    bodyFormData.append('name', data.name)
+    bodyFormData.append('email', data.email)
+    bodyFormData.append('password', data.password)
+    bodyFormData.append('banner', data.banner)
+    bodyFormData.append('logo', data.logo)
+    bodyFormData.append('gradient', data.gradient)
+
+    Axios({
+      method: 'post',
+      url: 'http://localhost:4000/company/',
+      data: bodyFormData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        //handle success
+        console.log(response)
+      })
+      .catch(function (response) {
+        //handle error
+        console.log(response)
+      })
   }
 
   return (
@@ -102,7 +131,7 @@ function CompanySignUp({ setForm }) {
             type='file'
             id='banner'
             required
-            onChange={e => handleFile(e)}
+            onChange={e => handleFileBanner(e)}
           />
         </div>
         <div className='flex flex-col py-2'>
@@ -114,7 +143,7 @@ function CompanySignUp({ setForm }) {
             type='file'
             required
             id='logo'
-            onChange={e => handleFile(e)}
+            onChange={e => handleFileLogo(e)}
           />
         </div>
         <div className='flex flex-col py-2 '>

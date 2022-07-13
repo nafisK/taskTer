@@ -1,4 +1,5 @@
 import { React, useState } from 'react'
+const Axios = require('axios')
 
 function FreelancerSignUp({ setForm }) {
   // user: type, name, email, password, userImage, cash:0, tasks: []
@@ -16,9 +17,9 @@ function FreelancerSignUp({ setForm }) {
     name: '',
     email: '',
     password: '',
-    banner: null,
-    logo: null,
+    pfp: null,
     gradient: GRADIENTS[0],
+    cash: 0,
   })
 
   const handleForm = e => {
@@ -29,8 +30,9 @@ function FreelancerSignUp({ setForm }) {
 
   const handleFile = e => {
     const newData = { ...data }
-    newData[e.target.id] = e.target.value
+    newData['pfp'] = e.target.files[0]
     setData(newData)
+    console.log(newData)
   }
 
   const handleGradient = e => {
@@ -51,7 +53,31 @@ function FreelancerSignUp({ setForm }) {
 
   const handleSubmit = e => {
     e.preventDefault()
-    console.log(data)
+
+    var bodyFormData = new FormData()
+    bodyFormData.append('type', data.type)
+    bodyFormData.append('name', data.name)
+    bodyFormData.append('email', data.email)
+    bodyFormData.append('password', data.password)
+
+    bodyFormData.append('pfp', data.pfp)
+    bodyFormData.append('gradient', data.gradient)
+    bodyFormData.append('cash', data.cash)
+
+    Axios({
+      method: 'post',
+      url: 'http://localhost:4000/freelancer/',
+      data: bodyFormData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        //handle success
+        console.log(response)
+      })
+      .catch(function (response) {
+        //handle error
+        console.log(response)
+      })
   }
 
   return (
@@ -101,7 +127,7 @@ function FreelancerSignUp({ setForm }) {
             className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-yellow-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
             type='file'
             required
-            id='logo'
+            id='pfp'
             onChange={e => handleFile(e)}
           />
         </div>

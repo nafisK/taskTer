@@ -4,8 +4,16 @@ function LoginForm({ setForm }) {
   const COMPANY = 'company'
   const FREELANCER = 'freelancer'
 
+  const handleSubmit = e => {
+    e.preventDefault()
+    
+  }
+
   return (
-    <form className='max-w-[400px] w-full mx-auto bg-white p-5 rounded-md shadow-lg'>
+    <form
+      className='max-w-[400px] w-full mx-auto bg-white p-5 rounded-md shadow-lg'
+      onSubmit={handleSubmit}
+    >
       <h2 className='text-4xl font-bold text-center py-6 text-yellow-400'>
         TASKTER.
       </h2>
