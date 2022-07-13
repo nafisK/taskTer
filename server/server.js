@@ -34,8 +34,7 @@ app.get('/', (req, res) => {
 
 // General Login
 app.get('/login', (req, res) => {
-  // console.log(req.query)
-  // res.send(req.query)
+
   // create two queries, freelancer or company
   const typeOfUser = req.query.type
   // if freelancer, check if email and password match
@@ -44,7 +43,6 @@ app.get('/login', (req, res) => {
       .then(company => {
         if (company) {
           if (company.password === req.query.password) {
-            console.log(company)
             res.send(company)
           } else {
             res.send('Incorrect password')

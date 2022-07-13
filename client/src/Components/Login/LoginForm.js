@@ -1,5 +1,6 @@
 import { React, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function LoginForm({ setForm }) {
   const COMPANY = 'company'
@@ -9,6 +10,7 @@ function LoginForm({ setForm }) {
     password: '',
     type: '',
   })
+  const navigate = useNavigate()
 
   const handleForm = e => {
     const newData = { ...data }
@@ -18,24 +20,6 @@ function LoginForm({ setForm }) {
 
   const handleSubmit = e => {
     e.preventDefault()
-    // var bodyFormData = new FormData()
-    // bodyFormData.append('email', data.email)
-    // bodyFormData.append('password', data.password)
-    // bodyFormData.append('type', data.type)
-    // axios({
-    //   method: 'GET',
-    //   url: 'http://localhost:4000/login',
-    //   data: bodyFormData,
-    //   headers: { 'Content-Type': 'multipart/form-data' },
-    // })
-    //   .then(res => {
-    //     console.log(res)
-    //     // TODO: route to company / freeancer page based on json data sent back from server
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
-
     axios
       .get('http://localhost:4000/login/', {
         params: {
@@ -45,21 +29,30 @@ function LoginForm({ setForm }) {
         },
       })
       .then(res => {
-        // TODO:  make dialog with response from server
-        console.log(res)
-        if (res.data.message === 'Incorrect password') {
-          // TODO: DO SOMETHING
-        }
-        else if (res.data.message === 'User not found') {
-          // TODO: DO SOMETHING
-      }
-      else {
-        // TODO GO TO COMPANY OR FREELANCER PAGE
+        // handle response
+        handleResponse(res)
       })
       .catch(err => {
         // TODO:  make dialog with response from server
         console.log(err)
       })
+  }
+
+  const handleResponse = res => {
+    console.log(res)
+    if (res.data.message === 'Incorrect password') {
+      // TODO: DO SOMETHING
+    } else if (res.data.message === 'User not found') {
+      // TODO: DO SOMETHING
+    } else {
+      if (res.data.type === 'company') {
+        // save data to global context
+        navigate('/company')
+      } else if (res.data.type === 'freelancer') {
+        // save data to global context
+        navigate('/freelancer')
+      }
+    }
   }
 
   return (
