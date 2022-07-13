@@ -21,6 +21,7 @@ function FreelancerSignUp({ setForm }) {
     gradient: GRADIENTS[0],
     cash: 0,
   })
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleForm = e => {
     const newData = { ...data }
@@ -73,6 +74,10 @@ function FreelancerSignUp({ setForm }) {
       .then(function (response) {
         //handle success
         console.log(response)
+        console.log(response)
+        if (response.data === 'success') {
+          setIsOpen(true)
+        }
       })
       .catch(function (response) {
         //handle error

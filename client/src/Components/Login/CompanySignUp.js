@@ -1,4 +1,6 @@
 import { React, useState } from 'react'
+import { Dialog } from '@headlessui/react'
+import SuccessDialogue from '../../Components/Login/SuccessDialogue'
 const Axios = require('axios')
 
 function CompanySignUp({ setForm }) {
@@ -21,6 +23,7 @@ function CompanySignUp({ setForm }) {
     logo: null,
     gradient: GRADIENTS[0],
   })
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleForm = e => {
     const newData = { ...data }
@@ -76,6 +79,9 @@ function CompanySignUp({ setForm }) {
       .then(function (response) {
         //handle success
         console.log(response)
+        if (response.data === 'success') {
+          setIsOpen(true)
+        }
       })
       .catch(function (response) {
         //handle error
@@ -185,6 +191,8 @@ function CompanySignUp({ setForm }) {
         >
           Sign Up
         </button>
+
+        {isOpen && <SuccessDialogue setIsOpen={setIsOpen} isOpen={isOpen} />}
 
         <div className='text-center'>
           <button
