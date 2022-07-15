@@ -21,20 +21,19 @@ const TaskSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  companyId: {
-    type: String,
-    required: true,
-  },
+  // companyId: {
+  //   type: String,
+  //   required: true,
+  // },
   companyName: {
     type: String,
     required: true,
   },
   freelancerId: {
     type: String,
-    required: true,
   },
   dueDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   status: {

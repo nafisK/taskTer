@@ -10,6 +10,10 @@ require('dotenv/config')
 const app = express()
 app.use(cors())
 
+// may need to disable later
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
 // Multer Storage
 const upload = multer({ dest: 'uploads/' })
 const storage = multer.diskStorage({
@@ -34,7 +38,6 @@ app.get('/', (req, res) => {
 
 // General Login
 app.get('/login', (req, res) => {
-
   // create two queries, freelancer or company
   const typeOfUser = req.query.type
   // if freelancer, check if email and password match
@@ -78,23 +81,37 @@ app.get('/login', (req, res) => {
 })
 
 // ! TASKS
-app.post('/task', upload.any(), (req, res) => {
+app.post('/task', (req, res) => {
   const saveTask = TaskModel({
-    name: req.body.name,
-    description: req.body.description,
-    links: req.body.links,
-    contact: req.body.contact,
-    pay: req.body.pay,
-    companyId: req.body.companyId,
-    companyName: req.body.companyName,
-    freelancerId: req.body.freelancerId,
-    dueDate: req.body.dueDate,
-    status: req.body.status,
+    name: req.body.params.name,
+    description: req.body.params.description,
+    links: req.body.params.links,
+    contact: req.body.params.contact,
+    pay: req.body.params.pay,
+    // companyId: req.body.params.companyId,
+    companyName: req.body.params.companyName,
+    freelancerId: req.body.params.freelancerId,
+    dueDate: req.body.params.dueDate,
+    status: req.body.params.status,
   })
+
   saveTask
     .save()
-    .then(() => {
-      res.send('success')
+    .then(task => {
+      res.send(task)
+    })
+    .catch(err => {
+      res.json({ message: err })
+    })
+})
+app.post('/task', async (req, res) => {
+  res.send(req.query)
+})
+
+app.get('/task/', (req, res) => {
+  TaskModel.find()
+    .then(tasks => {
+      res.send(tasks)
     })
     .catch(err => {
       res.json({ message: err })
@@ -135,6 +152,16 @@ app.post('/company', upload.any(), async (req, res) => {
       console.log(err)
       res.send(err)
     })
+})
+
+// gets a single post
+app.get('/company/:postId', async (req, res) => {
+  try {
+    const company = await CompanyModel.findOne({ email: req.params.postId })
+    res.send(company)
+  } catch (err) {
+    res.json({ message: err })
+  }
 })
 
 // ! FREELANCER

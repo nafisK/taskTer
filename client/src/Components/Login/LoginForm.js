@@ -1,6 +1,7 @@
-import { React, useState } from 'react'
-import axios from 'axios'
+import { React, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../Helper/Context'
+import axios from 'axios'
 
 function LoginForm({ setForm }) {
   const COMPANY = 'company'
@@ -11,6 +12,7 @@ function LoginForm({ setForm }) {
     type: '',
   })
   const navigate = useNavigate()
+  const { setCompany, setFreelancer, setIsLoggedIn } = useContext(UserContext)
 
   const handleForm = e => {
     const newData = { ...data }
@@ -39,7 +41,6 @@ function LoginForm({ setForm }) {
   }
 
   const handleResponse = res => {
-    console.log(res)
     if (res.data.message === 'Incorrect password') {
       // TODO: DO SOMETHING
     } else if (res.data.message === 'User not found') {
@@ -47,9 +48,29 @@ function LoginForm({ setForm }) {
     } else {
       if (res.data.type === 'company') {
         // save data to global context
+        setCompany({
+          type: res.data.type,
+          name: res.data.name,
+          email: res.data.email,
+          password: res.data.password,
+          gradient: res.data.gradient,
+          banner: res.data.banner,
+          logo: res.data.logo,
+        })
+        setIsLoggedIn(true)
         navigate('/company')
       } else if (res.data.type === 'freelancer') {
         // save data to global context
+        setFreelancer({
+          type: res.data.type,
+          name: res.data.name,
+          email: res.data.email,
+          password: res.data.password,
+          gradient: res.data.gradient,
+          cash: res.data.cash,
+          pfp: res.data.pfp,
+        })
+        setIsLoggedIn(true)
         navigate('/freelancer')
       }
     }
