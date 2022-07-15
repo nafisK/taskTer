@@ -118,6 +118,34 @@ app.get('/task/', (req, res) => {
     })
 })
 
+// updates a post
+app.put('/task/take/:name', async (req, res) => {
+  TaskModel.findOneAndUpdate(
+    { name: req.params.name },
+    { $set: { status: 'doing' } }
+  )
+    .then(task => {
+      res.send(task)
+    })
+    .catch(err => {
+      res.json({ message: err })
+    })
+})
+
+// updates a post
+app.put('/task/done/:name', async (req, res) => {
+  TaskModel.findOneAndUpdate(
+    { name: req.params.name },
+    { $set: { status: 'done' } }
+  )
+    .then(task => {
+      res.send(task)
+    })
+    .catch(err => {
+      res.json({ message: err })
+    })
+})
+
 // ! COMPANY
 app.post('/company', upload.any(), async (req, res) => {
   const imgObj1 = {

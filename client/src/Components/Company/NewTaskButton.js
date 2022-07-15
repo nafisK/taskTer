@@ -61,7 +61,7 @@ export default function NewTaskButton({ company, setTodoTasks }) {
       <div className='inset-0 flex items-center justify-center'>
         <a
           onClick={openModal}
-          class='rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-yellow-600 text-yellow-600 text-white'
+          className='rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-yellow-600 text-yellow-600 text-white'
         >
           <span class='absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-yellow-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease'></span>
           <span class='relative text-yellow-600 transition duration-300 group-hover:text-white ease'>

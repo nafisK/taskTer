@@ -20,18 +20,49 @@ export default function FreelancerBody() {
       })
   }, [])
 
+  const handleTakeTask = name => {
+    axios
+      .put(`http://localhost:4000/task/take/${name}`)
+      .then(res => {
+        const index = todoTasks.findIndex(todo => todo.name === res.data.name)
+        const newTodoTasks = [...todoTasks]
+        newTodoTasks[index].status = 'doing'
+        setTodoTasks(newTodoTasks)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  const handleCompletedTask = name => {
+    axios
+      .put(`http://localhost:4000/task/done/${name}`)
+      .then(res => {
+        const index = todoTasks.findIndex(todo => todo.name === res.data.name)
+        const newTodoTasks = [...todoTasks]
+        newTodoTasks[index].status = 'done'
+        setTodoTasks(newTodoTasks)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   return (
     <div className='w-full h-screen bg-zinc-200 '>
       <div className='grid md:grid-cols-3 gap-2 max-w-[1240px] m-auto'>
-        <div className='flex flex-col justify-center md:items-start w-full px-2 mt-2 bg-red-600 rounded-lg'>
+        <div className='flex flex-col md:items-start w-full px-2 mt-7 bg-red-600 rounded-lg'>
           {/* items */}
-          <div className='font-bold text-xl text-white'>
+          <div className='font-bold text-xl text-white mt-2'>
             <h1>TASKS PUBLISHED</h1>
           </div>
           {todoTasks
             .filter(val => val.status === 'todo')
             .map(task => (
-              <div className='rounded overflow-hidden shadow-lg bg-white my-3 w-full'>
+              <div
+                key={task.name}
+                className='rounded overflow-hidden shadow-lg bg-white my-3 w-full'
+              >
                 <div className='px-6 py-4'>
                   <div className='font-bold text-xl mb-2'>{task.name}</div>
                   <p className='text-gray-700 text-base'>{task.description}</p>
@@ -41,20 +72,31 @@ export default function FreelancerBody() {
                   <p className='text-gray-700 text-base'>{task.companyName}</p>
                   <p className='text-gray-700 text-base'>{task.dueDate}</p>
                   <p className='text-gray-700 text-base'>{task.status}</p>
+                  <button
+                    onClick={() => handleTakeTask(task.name)}
+                    className='mt-2 bg-transparent hover:bg-orange-600
+                    text-yellow-500 font-semibold hover:text-white py-2 px-4
+                    border border-yellow-500 hover:border-transparent rounded'
+                  >
+                    Take Task
+                  </button>
                 </div>
               </div>
             ))}
         </div>
 
-        <div className='flex flex-col justify-center md:items-start w-full px-2 mt-2 bg-orange-600 rounded-lg'>
+        <div className='flex flex-col md:items-start w-full px-2 mt-7 bg-orange-600 rounded-lg'>
           {/* items */}
-          <div className='font-bold text-xl text-white'>
+          <div className='font-bold text-xl text-white mt-2'>
             <h1>IN PROGRESS</h1>
           </div>
           {todoTasks
             .filter(val => val.status === 'doing')
             .map(task => (
-              <div className='rounded overflow-hidden shadow-lg bg-white my-3 w-full'>
+              <div
+                key={task.name}
+                className='rounded overflow-hidden shadow-lg bg-white my-3 w-full'
+              >
                 <div className='px-6 py-4'>
                   <div className='font-bold text-xl mb-2'>{task.name}</div>
                   <p className='text-gray-700 text-base'>{task.description}</p>
@@ -64,20 +106,29 @@ export default function FreelancerBody() {
                   <p className='text-gray-700 text-base'>{task.companyName}</p>
                   <p className='text-gray-700 text-base'>{task.dueDate}</p>
                   <p className='text-gray-700 text-base'>{task.status}</p>
+                  <button
+                    onClick={() => handleCompletedTask(task.name)}
+                    className='mt-2 bg-transparent hover:bg-green-600 text-yellow-500 font-semibold hover:text-white py-2 px-4 border border-yellow-500 hover:border-transparent rounded'
+                  >
+                    Mark as Complete
+                  </button>
                 </div>
               </div>
             ))}
         </div>
 
-        <div className='flex flex-col justify-center md:items-start w-full px-2 mt-2 bg-green-600 rounded-lg'>
+        <div className='flex flex-col md:items-start w-full px-2 mt-7 bg-green-600 rounded-lg'>
           {/* items */}
-          <div className='font-bold text-xl text-white'>
+          <div className='font-bold text-xl text-white mt-2'>
             <h1>TASKS COMPLETED</h1>
           </div>
           {todoTasks
             .filter(val => val.status === 'done')
             .map(task => (
-              <div className='rounded overflow-hidden shadow-lg bg-white my-3 w-full'>
+              <div
+                key={task.name}
+                className='rounded overflow-hidden shadow-lg bg-white my-3 w-full'
+              >
                 <div className='px-6 py-4'>
                   <div className='font-bold text-xl mb-2'>{task.name}</div>
                   <p className='text-gray-700 text-base'>{task.description}</p>
