@@ -63,8 +63,8 @@ export default function NewTaskButton({ company, setTodoTasks }) {
           onClick={openModal}
           className='rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-yellow-600 text-yellow-600 text-white'
         >
-          <span class='absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-yellow-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease'></span>
-          <span class='relative text-yellow-600 transition duration-300 group-hover:text-white ease'>
+          <span className='absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-yellow-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease'></span>
+          <span className='relative text-yellow-600 transition duration-300 group-hover:text-white ease'>
             Publish new task!
           </span>
         </a>
@@ -151,7 +151,7 @@ export default function NewTaskButton({ company, setTodoTasks }) {
                     </form>
                   </div>
 
-                  {/* <div className='mt-3 text-center'>
+                  <div className='mt-3 text-center'>
                     <button
                       type='button'
                       className='inline-flex justify-center rounded-md border border-transparent bg-green-300 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2'
@@ -159,7 +159,7 @@ export default function NewTaskButton({ company, setTodoTasks }) {
                     >
                       Publish new task!
                     </button>
-                  </div> */}
+                  </div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

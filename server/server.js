@@ -146,6 +146,17 @@ app.put('/task/done/:name', async (req, res) => {
     })
 })
 
+app.delete('/task/cancel/:name', async (req, res) => {
+  // delete task
+  TaskModel.findOneAndDelete({ name: req.params.name })
+    .then(task => {
+      res.send(task)
+    })
+    .catch(err => {
+      res.json({ message: err })
+    })
+})
+
 // ! COMPANY
 app.post('/company', upload.any(), async (req, res) => {
   const imgObj1 = {

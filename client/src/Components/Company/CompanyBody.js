@@ -19,6 +19,20 @@ export default function Body() {
       })
   }, [])
 
+  const handleCancelTask = name => {
+    axios
+      .delete(`http://localhost:4000/task/cancel/${name}`)
+      .then(res => {
+        const index = todoTasks.findIndex(todo => todo.name === res.data.name)
+        const newTodoTasks = [...todoTasks]
+        newTodoTasks.splice(index, 1)
+        setTodoTasks(newTodoTasks)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   return (
     <div className='w-full h-screen bg-zinc-200 '>
       <NewTaskButton
@@ -26,17 +40,20 @@ export default function Body() {
         todoTasks={todoTasks}
         setTodoTasks={setTodoTasks}
       />
-      <div className='grid md:grid-cols-2 max-w-[1240px] m-auto'>
-        <div className='flex flex-col justify-center md:items-start w-full px-2 mt-2 '>
-          <div className='font-bold text-xl text-red-600'>
+      <div className='grid md:grid-cols-2 gap-2 max-w-[1240px] m-auto'>
+        <div className='flex flex-col md:items-start w-full px-2 mt-7 bg-red-600 rounded-lg'>
+          <div className='font-bold text-xl text-white mt-2'>
             <h1>PUBLISHED</h1>
           </div>
           {/* items */}
 
           {todoTasks
-            .filter(val => val.status == 'todo')
+            .filter(val => val.status === 'todo')
             .map(task => (
-              <div className='rounded overflow-hidden shadow-lg bg-white my-3 w-full'>
+              <div
+                key={task.name}
+                className='rounded overflow-hidden shadow-lg bg-white my-3 w-full'
+              >
                 <div className='px-6 py-4'>
                   <div className='font-bold text-xl mb-2'>{task.name}</div>
                   <p className='text-gray-700 text-base'>{task.description}</p>
@@ -47,6 +64,7 @@ export default function Body() {
                   <p className='text-gray-700 text-base'>{task.dueDate}</p>
                   <p className='text-gray-700 text-base'>{task.status}</p>
                   <button
+                    onClick={() => handleCancelTask(task.name)}
                     type='button'
                     className='text-white bg-gradient-to-br from-red-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center py-2 px-4 mt-3'
                   >
@@ -57,15 +75,18 @@ export default function Body() {
             ))}
         </div>
 
-        <div className='flex flex-col justify-center md:items-start w-full px-2 mt-2 '>
+        <div className='flex flex-col md:items-start w-full px-2 mt-7 bg-green-600 rounded-lg'>
           {/* items */}
-          <div className='font-bold text-xl text-green-600'>
+          <div className='font-bold text-xl text-white mt-2'>
             <h1>COMPLETED</h1>
           </div>
           {todoTasks
-            .filter(val => val.status == 'done')
+            .filter(val => val.status === 'done')
             .map(task => (
-              <div className='rounded overflow-hidden shadow-lg bg-white my-3 w-full'>
+              <div
+                key={task.name}
+                className='rounded overflow-hidden shadow-lg bg-white my-3 w-full'
+              >
                 <div className='px-6 py-4'>
                   <div className='font-bold text-xl mb-2'>{task.name}</div>
                   <p className='text-gray-700 text-base'>{task.description}</p>
