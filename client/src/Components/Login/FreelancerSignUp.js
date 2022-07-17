@@ -1,3 +1,4 @@
+import SuccessDialogue from './SuccessDialogue'
 import { React, useState } from 'react'
 const Axios = require('axios')
 
@@ -175,6 +176,8 @@ function FreelancerSignUp({ setForm }) {
         >
           Sign Up
         </button>
+        
+        {isOpen && <SuccessDialogue setIsOpen={setIsOpen} isOpen={isOpen} />}
 
         <div className='text-center'>
           <button

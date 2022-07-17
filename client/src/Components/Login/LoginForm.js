@@ -56,8 +56,7 @@ function LoginForm({ setForm }) {
           gradient: res.data.gradient,
           banner: res.data.banner,
           logo: res.data.logo,
-        })    
-        res.data.pipe(fs.createWriteStream("/temp/my.pdf"));
+        })
 
         setIsLoggedIn(true)
         navigate('/company')

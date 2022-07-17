@@ -24,7 +24,7 @@ export default function TimelineHeader() {
   // TODO ADD GRADIENT HERE
 
   return (
-    <div className={`shadow relative text-center`}>
+    <div className={`shadow relative text-center ${company.gradient}`}>
       <div className='relative h-96 rounded-b flex justify-center'>
         <img
           src={cover}

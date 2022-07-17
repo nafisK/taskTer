@@ -56,13 +56,36 @@ export default function Body() {
               >
                 <div className='px-6 py-4'>
                   <div className='font-bold text-xl mb-2'>{task.name}</div>
-                  <p className='text-gray-700 text-base'>{task.description}</p>
-                  <p className='text-gray-700 text-base'>{task.links}</p>
-                  <p className='text-gray-700 text-base'>{task.contact}</p>
-                  <p className='text-gray-700 text-base'>{task.pay}</p>
-                  <p className='text-gray-700 text-base'>{task.companyName}</p>
-                  <p className='text-gray-700 text-base'>{task.dueDate}</p>
-                  <p className='text-gray-700 text-base'>{task.status}</p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Company: </span>
+                    {task.companyName}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Description: </span>
+                    {task.description}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Project Link: </span>
+                    {task.links}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Contact: </span>
+                    {task.contact}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Payment Amount: </span>
+                    {task.pay}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Due On: </span>
+                    {task.dueDate}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Status: </span>
+                    <span className='text-red-600 font-bold uppercase '>
+                      {task.status}
+                    </span>
+                  </p>
                   <button
                     onClick={() => handleCancelTask(task.name)}
                     type='button'
@@ -89,13 +112,36 @@ export default function Body() {
               >
                 <div className='px-6 py-4'>
                   <div className='font-bold text-xl mb-2'>{task.name}</div>
-                  <p className='text-gray-700 text-base'>{task.description}</p>
-                  <p className='text-gray-700 text-base'>{task.links}</p>
-                  <p className='text-gray-700 text-base'>{task.contact}</p>
-                  <p className='text-gray-700 text-base'>{task.pay}</p>
-                  <p className='text-gray-700 text-base'>{task.companyName}</p>
-                  <p className='text-gray-700 text-base'>{task.dueDate}</p>
-                  <p className='text-gray-700 text-base'>{task.status}</p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Company: </span>
+                    {task.companyName}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Description: </span>
+                    {task.description}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Project Link: </span>
+                    {task.links}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Contact: </span>
+                    {task.contact}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Payment Amount: </span>
+                    {task.pay}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Due On: </span>
+                    {task.dueDate}
+                  </p>
+                  <p className='text-gray-700 text-base'>
+                    <span className='font-bold'>Status: </span>
+                    <span className='text-green-600 font-bold uppercase '>
+                      {task.status}
+                    </span>
+                  </p>
                   <button
                     className='text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm py-2 px-4 mt-3'
                     type='button'
